@@ -7,5 +7,6 @@ CREATE TABLE task(
     end_day int,
     visible_from_day int,
     effort numeric,
+    name text,
     type text not null
 )

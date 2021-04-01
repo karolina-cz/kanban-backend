@@ -17,7 +17,8 @@ public class TaskDtoMapper {
     public Task mapTaskDtoToTask(TaskDto taskDto) {
         Room room = roomRepository.findById(taskDto.getRoomId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
-        return new Task(room, taskDto.isBlocked(), taskDto.getKanbanColumn(), taskDto.getStartDay(),
-                taskDto.getEndDay(), taskDto.getEffort(), task)
+        return new Task(room, taskDto.getIsBlocked(), taskDto.getKanbanColumn(), taskDto.getStartDay(),
+                taskDto.getEndDay(), taskDto.getEffort(), taskDto.getVisibleFromDay(), taskDto.getType(),
+                taskDto.getName());
     }
 }

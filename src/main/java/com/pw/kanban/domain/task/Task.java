@@ -22,6 +22,9 @@ public class Task {
     @Column(name = "task_id")
     private UUID taskId;
 
+    @Column(name="name")
+    private String name;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @ToString.Exclude
     @JoinColumn(name="room_id")
@@ -64,8 +67,8 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "room_member_id"))
     private Set<RoomMember> assignees;
 
-    public Task(Room room, boolean isBlocked, ColumnName kanbanColumn, int startDay, int endDay, double effort,
-                int visibleFromDay, TaskType type) {
+    public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
+                Integer visibleFromDay, TaskType type, String name) {
         this.room = room;
         this.isBlocked = isBlocked;
         this.kanbanColumn = kanbanColumn;
@@ -74,5 +77,6 @@ public class Task {
         this.effort = effort;
         this.visibleFromDay = visibleFromDay;
         this.type = type;
+        this.name = name;
     }
 }

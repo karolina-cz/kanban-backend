@@ -7,11 +7,12 @@ import java.util.UUID;
 @Data
 public class TaskDto {
     UUID roomId;
-    boolean isBlocked;
+    Boolean isBlocked;
     TaskType type;
     ColumnName kanbanColumn;
-    int startDay;
+    Integer startDay;
     Integer endDay;
     Integer visibleFromDay;
-    double effort;
+    Double effort;
+    String name;
 }
