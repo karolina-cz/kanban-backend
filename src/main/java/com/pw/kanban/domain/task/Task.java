@@ -2,20 +2,18 @@ package com.pw.kanban.domain.task;
 
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.room_member.RoomMember;
-import com.pw.kanban.domain.work_point.WorkPoint;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
+// TODO urgent add due date
 @Data
 @Entity
 @Table(name="task")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Task {
-    //TODO update wielu taskow jednoczesnie - blokady
 
     @Id
     @GeneratedValue
@@ -50,25 +48,30 @@ public class Task {
     @Column(name = "end_day")
     private Integer endDay;
 
+    @Column (name= "due_day")
+    private Integer dueDay;
+
     @Column(name = "visible_from_day")
     private Integer visibleFromDay;
 
     @Column(name = "effort")
     private Double effort;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
-    @ToString.Exclude
-    private List<WorkPoint> workPoints;
+    @Column(name = "work_points1")
+    private String workPoints1;
+
+    @Column(name = "work_points2")
+    private String workPoints2;
 
     @ManyToMany
     @JoinTable(
             name = "assignee",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "room_member_id"))
-    private Set<RoomMember> assignees;
+    private List<RoomMember> assignees;
 
     public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
-                Integer visibleFromDay, TaskType type, String name) {
+                Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2) {
         this.room = room;
         this.isBlocked = isBlocked;
         this.kanbanColumn = kanbanColumn;
@@ -78,5 +81,7 @@ public class Task {
         this.visibleFromDay = visibleFromDay;
         this.type = type;
         this.name = name;
+        this.workPoints1 = workPoints1;
+        this.workPoints2 = workPoints2;
     }
 }

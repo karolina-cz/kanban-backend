@@ -22,24 +22,28 @@ public class RoomResource {
     private final PatchRoomHandler patchRoomHandler;
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     UUID createRoom(@RequestBody RoomDto roomDto) {
         return createRoomHandler.handle(roomDto);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping(path="/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     RoomRepresentation getRoom(@PathVariable UUID roomId) {
         return getRoomHandler.handle(roomId);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping(path="/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     void deleteRoom(@PathVariable UUID roomId) {
         deleteRoomHandler.handle(roomId);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PatchMapping(path="/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     RoomRepresentation patchRoom(@RequestBody RoomDto roomDto, @PathVariable UUID roomId) {

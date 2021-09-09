@@ -10,27 +10,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PatchTaskAssigneeHandler {
+public class CreateTaskAssigneeHandler {
     private final TaskRepository taskRepository;
     private final RoomMemberRepository roomMemberRepository;
 
     @Transactional
-    public void handle(UUID taskId, List<UUID> roomMemberIds) {
+    public void handle(UUID taskId, UUID roomMemberId) {
         Task task = taskRepository.findById(taskId).orElseThrow(() ->
-            new ResponseStatusException(HttpStatus.NOT_FOUND)
+                new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        task.getAssignees().clear();
-        roomMemberIds.forEach((roomMemberId) -> {
-            RoomMember roomMember = roomMemberRepository.findById(roomMemberId).orElseThrow(() ->
-                    new ResponseStatusException(HttpStatus.NOT_FOUND)
-            );
+        RoomMember roomMember = roomMemberRepository.findById(roomMemberId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND)
+        );
+        if (!containsRoomMemberId(task.getAssignees(), roomMember.getRoomMemberId())) {
             task.getAssignees().add(roomMember);
-        });
-        taskRepository.save(task);
+            taskRepository.save(task);
+        }
+    }
+
+    public boolean containsRoomMemberId(final List<RoomMember> list, final UUID roomMemberId){
+        return list.stream().anyMatch(o -> o.getRoomMemberId().equals(roomMemberId));
     }
 }

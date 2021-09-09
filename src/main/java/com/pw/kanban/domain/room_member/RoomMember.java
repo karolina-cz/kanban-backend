@@ -3,7 +3,6 @@ package com.pw.kanban.domain.room_member;
 import com.pw.kanban.domain.daily_productivity.DailyProductivity;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.task.Task;
-import com.pw.kanban.domain.work_point.WorkPoint;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +15,7 @@ import java.util.UUID;
 @Table(name="room_member")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RoomMember {
+
     @Id
     @GeneratedValue
     @Column(name = "room_member_id")
@@ -27,6 +27,10 @@ public class RoomMember {
 
     @Column(name = "is_active")
     private boolean isActive;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private RoomMemberType type;
 
     @NonNull
     @Column(name="color")
@@ -40,19 +44,20 @@ public class RoomMember {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomMember")
     @ToString.Exclude
-    private List<WorkPoint> workPoints;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomMember")
-    @ToString.Exclude
     private List<DailyProductivity> dailyProductivityList;
 
     @ManyToMany(mappedBy = "assignees")
-    private Set<Task> tasks;
+    private List<Task> tasks;
 
-    public RoomMember(@NonNull String name, boolean isActive, @NonNull Color color, Room room) {
+    @Column(name = "daily_productivity")
+    private String dailyProductivity;
+
+    public RoomMember(@NonNull String name, boolean isActive, @NonNull Color color, Room room, RoomMemberType type, String dailyProductivity) {
         this.name = name;
         this.isActive = isActive;
         this.color = color;
         this.room = room;
+        this.type = type;
+        this.dailyProductivity = dailyProductivity;
     }
 }

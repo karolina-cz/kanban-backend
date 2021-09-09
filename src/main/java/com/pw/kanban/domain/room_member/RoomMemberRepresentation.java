@@ -13,4 +13,6 @@ public class RoomMemberRepresentation {
     String name;
     Color color;
     boolean isActive;
+    RoomMemberType type;
+    Double[] dailyProductivity;
 }

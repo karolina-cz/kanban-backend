@@ -47,7 +47,7 @@ public class Room {
     @Column(name = "done_limit")
     private int doneLimit;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Task> tasks;
 

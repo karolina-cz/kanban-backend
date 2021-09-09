@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,14 +20,28 @@ import java.util.UUID;
 public class PatchRoomMemberHandler {
     private final RoomMemberRepository roomMemberRepository;
     private final RoomMemberRepresentationMapper roomMemberRepresentationMapper;
+    private final MemberProductivityConverter memberProductivityConverter;
 
     @Transactional
     public RoomMemberRepresentation handle(RoomMemberDto roomMemberDto, UUID roomMemberId) {
         RoomMember roomMember = roomMemberRepository.findById(roomMemberId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if(roomMemberDto.getIsActive() != null) roomMember.setActive(roomMemberDto.getIsActive());
-        if(roomMemberDto.getName() != null) roomMember.setName(roomMemberDto.getName());
+        if (roomMemberDto.getIsActive() != null) roomMember.setActive(roomMemberDto.getIsActive());
+        if (roomMemberDto.getName() != null) roomMember.setName(roomMemberDto.getName());
+        if (roomMemberDto.getDailyProductivity() != null) {
+            roomMember.setDailyProductivity(memberProductivityConverter
+                    .doubleArrayToString(roomMemberDto
+                            .getDailyProductivity()));
+        }
         roomMemberRepository.save(roomMember);
         return roomMemberRepresentationMapper.mapRoomMemberToRepresentation(roomMember);
     }
+
+    @Transactional
+    public void handleMultiple(List<RoomMemberDto> roomMemberDtos) {
+        roomMemberDtos.forEach(roomMemberDto -> {
+            this.handle(roomMemberDto, roomMemberDto.getRoomMemberId());
+        });
+    }
+
 }

@@ -8,5 +8,8 @@ CREATE TABLE task(
     visible_from_day int,
     effort numeric,
     name text,
-    type text not null
+    type text not null,
+    work_points1 text not null,
+    work_points2 text not null,
+    due_day int
 )

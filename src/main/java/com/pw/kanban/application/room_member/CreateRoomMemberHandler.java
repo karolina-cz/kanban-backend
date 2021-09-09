@@ -20,6 +20,7 @@ public class CreateRoomMemberHandler {
 
     @Transactional
     public RoomMemberRepresentation handle(RoomMemberDto roomMemberDto) {
+        //TODO if room member is viewer - color is always the same - for example black
         RoomMember roomMember = roomMemberDtoMapper.mapRoomMemberDtoToRoomMember(roomMemberDto);
         roomMember = roomMemberRepository.save(roomMember);
         dailyProductivityGenerator.generateDailyProductivityForRoomMember(roomMember);

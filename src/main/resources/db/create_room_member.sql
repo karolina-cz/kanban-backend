@@ -3,5 +3,7 @@ room_member_id uuid primary key,
 name text not null,
 color text not null,
 is_active boolean,
-room_id uuid references room
+type text,
+room_id uuid references room,
+daily_productivity text not null,
 )

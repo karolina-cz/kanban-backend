@@ -19,12 +19,15 @@ public class DailyProductivityResource {
     private final PatchDailyProductivityHandler patchDailyProductivityHandler;
     private final GetDailyProductivityHandler getDailyProductivityHandler;
 
+    //TODO OPTIONAL change - pass room member and day number
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
     List<DailyProductivityRepresentation> patchDailyProductivity(@RequestBody List<DailyProductivityDto> dailyProductivityDto) {
         return patchDailyProductivityHandler.handle(dailyProductivityDto);
     }
 
+    //TODO OPTIONAL change - pass roomId and day number insdead of dayId
+    // you dont have to return dayNumber in response
     @GetMapping("/day/{dayId}")
     @ResponseStatus(HttpStatus.OK)
     List<DailyProductivityRepresentation> getAllDailyProductivityForRoom(@PathVariable UUID dayId) {

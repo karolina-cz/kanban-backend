@@ -1,7 +1,6 @@
 package com.pw.kanban.api.day;
 
 import com.pw.kanban.application.day.GetDaysHandler;
-import com.pw.kanban.domain.day.Day;
 import com.pw.kanban.domain.day.DayRepresentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
