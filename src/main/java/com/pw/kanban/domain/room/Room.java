@@ -1,5 +1,6 @@
 package com.pw.kanban.domain.room;
 
+import com.pw.kanban.domain.column_limit.ColumnLimit;
 import com.pw.kanban.domain.day.Day;
 import com.pw.kanban.domain.room_member.RoomMember;
 import com.pw.kanban.domain.task.Task;
@@ -58,6 +59,10 @@ public class Room {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
     @ToString.Exclude
     private List<RoomMember> roomMembers;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @ToString.Exclude
+    private List<ColumnLimit> columnLimits;
 
 
     public Room(@NonNull RoomType type, @NonNull int stageOneLimit, @NonNull int stageOneInProgressLimit,
