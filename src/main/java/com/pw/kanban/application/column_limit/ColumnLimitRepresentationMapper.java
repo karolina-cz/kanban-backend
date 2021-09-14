@@ -18,7 +18,7 @@ public class ColumnLimitRepresentationMapper {
         if(columnLimit == null) return null;
         List<ColumnName> columns = columnNameConverter.stringToColumnNameArray(columnLimit.getColumns());
         return new ColumnLimitRepresentation(columnLimit.getColumnLimitId(), columnLimit.getLimitType(), columns,
-                columnLimit.getLimitValue());
+                columnLimit.getLimitValue(), columnLimit.getIsActive());
     }
 
     public List<ColumnLimitRepresentation> mapColumnLimitsToRepresentation(List<ColumnLimit> columnLimits) {

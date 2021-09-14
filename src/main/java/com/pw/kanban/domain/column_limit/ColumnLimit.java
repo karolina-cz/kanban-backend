@@ -33,11 +33,15 @@ public class ColumnLimit {
     @Column(name="limit_value")
     private Integer limitValue;
 
-    public ColumnLimit(Room room, ColumnLimitType limitType, String columns, Integer limitValue) {
+    @Column(name="is_active")
+    private Boolean isActive;
+
+    public ColumnLimit(Room room, ColumnLimitType limitType, String columns, Integer limitValue, Boolean isActive) {
         this.room = room;
         this.limitType = limitType;
         this.columns = columns;
         this.limitValue = limitValue;
+        this.isActive = isActive;
     }
 
 }

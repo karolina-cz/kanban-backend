@@ -21,6 +21,6 @@ public class ColumnLimitDtoMapper {
         Room room = roomRepository.findById(columnLimitDto.getRoomId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         String columns = columnNameConverter.columnNameArrayToString(columnLimitDto.getColumns());
-        return new ColumnLimit(room, columnLimitDto.getLimitType(), columns, columnLimitDto.getLimitValue());
+        return new ColumnLimit(room, columnLimitDto.getLimitType(), columns, columnLimitDto.getLimitValue(), columnLimitDto.getIsActive());
     }
 }

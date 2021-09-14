@@ -27,6 +27,7 @@ public class PatchColumnLimitHandler {
         if (columnLimitDto.getColumns() != null) {
             columnLimit.setColumns(columnNameConverter.columnNameArrayToString(columnLimitDto.getColumns()));
         }
+        if (columnLimitDto.getIsActive() != null) columnLimit.setIsActive(columnLimitDto.getIsActive());
         columnLimitRepository.save(columnLimit);
         return columnLimitRepresentationMapper.mapColumnLimitToRepresentation(columnLimit);
     }

@@ -13,4 +13,5 @@ public class ColumnLimitDto {
     ColumnLimitType limitType;
     List<ColumnName> columns;
     Integer limitValue;
+    Boolean isActive;
 }

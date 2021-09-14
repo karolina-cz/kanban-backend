@@ -3,5 +3,6 @@ CREATE TABLE column_limit(
     room_id uuid references room,
     limit_type text not null,
     columns text not null,
+    is_active boolean,
     limit_value int
 )
