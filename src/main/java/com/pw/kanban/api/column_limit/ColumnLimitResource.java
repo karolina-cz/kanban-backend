@@ -66,6 +66,18 @@ public class ColumnLimitResource {
         return columnLimitRepresentation;
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.OK)
+    List<ColumnLimitRepresentation> patchColumnsLimits(@RequestBody List<ColumnLimitDto> columnLimitDtos) {
+        if (columnLimitDtos.size() > 0) {
+            UUID roomId = getColumnLimitRepository.getColumnLimitRoomId(columnLimitDtos.get(0).getColumnLimitId());
+            List<ColumnLimitRepresentation> columnLimitRepresentation = patchColumnLimitHandler.handleMultiple(columnLimitDtos);
+            sendUpdatedColumnLimits(roomId);
+            return columnLimitRepresentation;
+        }
+        return null;
+    }
+
     private void sendUpdatedColumnLimits(UUID roomId) {
         List<ColumnLimitRepresentation> columnLimitRepresentations = getColumnLimitRepository.getAllColumnLimitsByRoomId(roomId);
         msgTemplate.convertAndSend("/topic/room/" + roomId +"/columnLimits", columnLimitRepresentations);

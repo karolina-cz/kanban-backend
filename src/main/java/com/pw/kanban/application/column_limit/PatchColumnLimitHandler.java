@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,13 @@ public class PatchColumnLimitHandler {
         if (columnLimitDto.getIsActive() != null) columnLimit.setIsActive(columnLimitDto.getIsActive());
         columnLimitRepository.save(columnLimit);
         return columnLimitRepresentationMapper.mapColumnLimitToRepresentation(columnLimit);
+    }
+
+    @Transactional
+    public List<ColumnLimitRepresentation> handleMultiple(List<ColumnLimitDto> columnLimitDtos) {
+        if(columnLimitDtos == null) return Collections.emptyList();
+        return columnLimitDtos.stream()
+                .map(element -> this.handle(element, element.getColumnLimitId()))
+                .collect(Collectors.toList());
     }
 }
