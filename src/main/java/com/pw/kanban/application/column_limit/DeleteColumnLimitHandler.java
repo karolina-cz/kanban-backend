@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -15,5 +16,10 @@ public class DeleteColumnLimitHandler {
     @Transactional
     public void handle(UUID columnLimitId) {
         columnLimitRepository.deleteById(columnLimitId);
+    }
+
+    @Transactional
+    public void handleMultiple(List<UUID> columnLimitIds) {
+        columnLimitIds.forEach(this::handle);
     }
 }

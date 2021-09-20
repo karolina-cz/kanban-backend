@@ -47,6 +47,16 @@ public class ColumnLimitResource {
         sendUpdatedColumnLimits(roomId);
     }
 
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    void deleteColumnLimits(@RequestBody List<UUID> columnLimitIds) {
+        if (columnLimitIds.size() > 0) {
+            UUID roomId = getColumnLimitRepository.getColumnLimitRoomId(columnLimitIds.get(0));
+            deleteColumnLimitHandler.handleMultiple(columnLimitIds);
+            sendUpdatedColumnLimits(roomId);
+        }
+    }
+
     @PatchMapping("/{columnLimitId}")
     @ResponseStatus(HttpStatus.OK)
     ColumnLimitRepresentation patchColumnLimit(@PathVariable UUID columnLimitId, @RequestBody ColumnLimitDto columnLimitDto) {
