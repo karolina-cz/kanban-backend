@@ -10,6 +10,6 @@ public class RoomRepresentationMapper {
     public RoomRepresentation mapRoomToRepresentation(Room room) {
         return new RoomRepresentation(room.getRoomId(), room.getType(), room.getStageOneLimit(),
                 room.getStageOneInProgressLimit(), room.getStageOneCommittedLimit(),
-                room.getStageOneDoneLimit(), room.getStageTwoLimit(), room.getDoneLimit());
+                room.getStageOneDoneLimit(), room.getStageTwoLimit(), room.getDoneLimit(), room.getBlockersProbability());
     }
 }

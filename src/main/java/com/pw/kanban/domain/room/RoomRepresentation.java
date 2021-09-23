@@ -16,4 +16,5 @@ public class RoomRepresentation {
     Integer stageOneDoneLimit;
     Integer stageTwoLimit;
     Integer doneLimit;
+    Integer blockersProbability;
 }

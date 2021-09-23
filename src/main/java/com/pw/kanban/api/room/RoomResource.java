@@ -8,6 +8,7 @@ import com.pw.kanban.domain.room.RoomDto;
 import com.pw.kanban.domain.room.RoomRepresentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class RoomResource {
     private final GetRoomHandler getRoomHandler;
     private final DeleteRoomHandler deleteRoomHandler;
     private final PatchRoomHandler patchRoomHandler;
+    private final SimpMessagingTemplate msgTemplate;
 
 
     @CrossOrigin(origins = "http://localhost:4200")
@@ -47,6 +49,12 @@ public class RoomResource {
     @PatchMapping(path="/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     RoomRepresentation patchRoom(@RequestBody RoomDto roomDto, @PathVariable UUID roomId) {
-        return patchRoomHandler.handle(roomDto, roomId);
+        RoomRepresentation roomRepresentation = patchRoomHandler.handle(roomDto, roomId);
+        this.sendUpdatedRoom(roomRepresentation);
+        return roomRepresentation;
+    }
+
+    public void sendUpdatedRoom(RoomRepresentation roomRepresentation) {
+        msgTemplate.convertAndSend("/topic/room/" + roomRepresentation.getRoomId() +"/info", roomRepresentation);
     }
 }

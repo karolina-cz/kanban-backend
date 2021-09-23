@@ -48,6 +48,9 @@ public class Room {
     @Column(name = "done_limit")
     private int doneLimit;
 
+    @Column(name = "blockers_probability")
+    private Integer blockersProbability;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Task> tasks;
@@ -67,7 +70,7 @@ public class Room {
 
     public Room(@NonNull RoomType type, @NonNull int stageOneLimit, @NonNull int stageOneInProgressLimit,
                 @NonNull int stageOneCommittedLimit, @NonNull int stageOneDoneLimit,
-                @NonNull int stageTwoLimit, int doneLimit) {
+                @NonNull int stageTwoLimit, int doneLimit, Integer blockersProbability) {
         this.type = type;
         this.stageOneLimit = stageOneLimit;
         this.stageOneInProgressLimit = stageOneInProgressLimit;
@@ -75,5 +78,6 @@ public class Room {
         this.stageOneDoneLimit = stageOneDoneLimit;
         this.stageTwoLimit = stageTwoLimit;
         this.doneLimit = doneLimit;
+        this.blockersProbability = blockersProbability;
     }
 }

@@ -24,6 +24,7 @@ public class ColumnLimitResource {
     private final PatchColumnLimitHandler patchColumnLimitHandler;
     private final SimpMessagingTemplate msgTemplate;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/room/{roomId}")
     @ResponseStatus(HttpStatus.OK)
     List<ColumnLimitRepresentation> getColumnLimits(@PathVariable UUID roomId) {
@@ -31,14 +32,19 @@ public class ColumnLimitResource {
     }
 
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    ColumnLimitRepresentation createColumnLimit(@RequestBody ColumnLimitDto columnLimitDto) {
-        ColumnLimitRepresentation columnLimitRepresentation = createColumnLimitHandler.handle(columnLimitDto);
-        sendUpdatedColumnLimits(columnLimitDto.getRoomId());
-        return columnLimitRepresentation;
+    List<ColumnLimitRepresentation> createColumnLimit(@RequestBody List<ColumnLimitDto> columnLimitDtos) {
+        if (columnLimitDtos.size() > 0) {
+            List<ColumnLimitRepresentation> columnLimitRepresentation = createColumnLimitHandler.handleMultiple(columnLimitDtos);
+            sendUpdatedColumnLimits(columnLimitDtos.get(0).getRoomId());
+            return columnLimitRepresentation;
+        }
+        return null;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/{columnLimitId}")
     @ResponseStatus(HttpStatus.OK)
     void deleteColumnLimit(@PathVariable UUID columnLimitId) {
@@ -47,16 +53,18 @@ public class ColumnLimitResource {
         sendUpdatedColumnLimits(roomId);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    void deleteColumnLimits(@RequestBody List<UUID> columnLimitIds) {
-        if (columnLimitIds.size() > 0) {
-            UUID roomId = getColumnLimitRepository.getColumnLimitRoomId(columnLimitIds.get(0));
-            deleteColumnLimitHandler.handleMultiple(columnLimitIds);
+    void deleteColumnLimits(@RequestBody List<ColumnLimitDto> columnLimitDtos) {
+        if (columnLimitDtos.size() > 0) {
+            UUID roomId = getColumnLimitRepository.getColumnLimitRoomId(columnLimitDtos.get(0).getColumnLimitId());
+            deleteColumnLimitHandler.handleMultiple(columnLimitDtos);
             sendUpdatedColumnLimits(roomId);
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PatchMapping("/{columnLimitId}")
     @ResponseStatus(HttpStatus.OK)
     ColumnLimitRepresentation patchColumnLimit(@PathVariable UUID columnLimitId, @RequestBody ColumnLimitDto columnLimitDto) {
@@ -66,6 +74,7 @@ public class ColumnLimitResource {
         return columnLimitRepresentation;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PatchMapping
     @ResponseStatus(HttpStatus.OK)
     List<ColumnLimitRepresentation> patchColumnsLimits(@RequestBody List<ColumnLimitDto> columnLimitDtos) {

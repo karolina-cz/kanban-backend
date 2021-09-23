@@ -28,6 +28,7 @@ public class PatchRoomHandler {
         if(roomDto.getStageOneDoneLimit() != null) room.setStageOneDoneLimit(roomDto.getStageOneDoneLimit());
         if(roomDto.getStageTwoLimit() != null) room.setStageTwoLimit(roomDto.getStageTwoLimit());
         if(roomDto.getDoneLimit() != null) room.setDoneLimit(roomDto.getDoneLimit());
+        if(roomDto.getBlockersProbability() != null) room.setBlockersProbability(roomDto.getBlockersProbability());
         roomRepository.save(room);
         return roomRepresentationMapper.mapRoomToRepresentation(room);
     }

@@ -11,4 +11,5 @@ public class RoomDto {
     Integer stageOneDoneLimit;
     Integer stageTwoLimit;
     Integer doneLimit;
+    Integer blockersProbability;
 }

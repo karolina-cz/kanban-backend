@@ -71,7 +71,7 @@ public class Task {
     private List<RoomMember> assignees;
 
     public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
-                Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2) {
+                Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2, Integer dueDay) {
         this.room = room;
         this.isBlocked = isBlocked;
         this.kanbanColumn = kanbanColumn;
@@ -83,5 +83,6 @@ public class Task {
         this.name = name;
         this.workPoints1 = workPoints1;
         this.workPoints2 = workPoints2;
+        this.dueDay = dueDay;
     }
 }

@@ -1,5 +1,6 @@
 package com.pw.kanban.application.column_limit;
 
+import com.pw.kanban.domain.column_limit.ColumnLimitDto;
 import com.pw.kanban.domain.column_limit.ColumnLimitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class DeleteColumnLimitHandler {
     }
 
     @Transactional
-    public void handleMultiple(List<UUID> columnLimitIds) {
-        columnLimitIds.forEach(this::handle);
+    public void handleMultiple(List<ColumnLimitDto> columnLimitDtos) {
+        columnLimitDtos.forEach(element -> this.handle(element.getColumnLimitId()));
     }
 }
