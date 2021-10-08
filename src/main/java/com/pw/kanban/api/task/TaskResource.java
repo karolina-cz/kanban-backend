@@ -1,15 +1,14 @@
 package com.pw.kanban.api.task;
 
+import com.pw.kanban.application.assignee.CreateAssigneeHandler;
+import com.pw.kanban.application.assignee.DeleteAssigneeHandler;
 import com.pw.kanban.application.task.*;
 import com.pw.kanban.domain.task.TaskDto;
 import com.pw.kanban.domain.task.TaskRepresentation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,12 +19,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TaskResource {
     private final GenerateTaskHandler generateTaskHandler;
-    private final PatchTaskAssigneeHandler patchTaskAssigneeHandler;
     private final GetTaskRepository getTaskRepository;
     private final PatchTaskRepository patchTaskRepository;
-    private final DeleteTaskAssigneeHandler deleteTaskAssigneeHandler;
+    private final DeleteAssigneeHandler deleteAssigneeHandler;
     private final SimpMessagingTemplate msgTemplate;
-    private final CreateTaskAssigneeHandler createTaskAssigneeHandler;
+    private final CreateAssigneeHandler createAssigneeHandler;
 
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
@@ -50,35 +48,6 @@ public class TaskResource {
         msgTemplate.convertAndSend("/topic/room/" + roomId +"/tasks", taskRepresentationList);
         return taskRepresentation;
     }
-
-
-    //TODO OPTIONAL change void to sth else
-    @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/{taskId}/roomMember/{roomMemberId}")
-    @ResponseStatus(HttpStatus.OK)
-    void addAssigneeToTask(@PathVariable UUID taskId, @PathVariable UUID roomMemberId) {
-        createTaskAssigneeHandler.handle(taskId, roomMemberId);
-        UUID roomId = getTaskRepository.getTaskById(taskId).getRoom().getRoomId();
-        this.sendUpdatedTasks(roomId);
-    }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @DeleteMapping("/{taskId}/roomMember/{roomMemberId}")
-    @ResponseStatus(HttpStatus.OK)
-    void deleteAssigneeFromTask(@PathVariable UUID taskId, @PathVariable UUID roomMemberId){
-        deleteTaskAssigneeHandler.handle(taskId, roomMemberId);
-        UUID roomId = getTaskRepository.getTaskById(taskId).getRoom().getRoomId();
-        this.sendUpdatedTasks(roomId);
-    }
-
-//    @CrossOrigin(origins = "http://localhost:4200")
-//    @PatchMapping("/{taskId}/roomMember/{roomMemberId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    void patchTaskAssignee(@PathVariable UUID taskId, @PathVariable UUID roomMemberId){
-//        patchTaskAssigneeHandler.handle(taskId, roomMemberId);
-//        UUID roomId = getTaskRepository.getTaskById(taskId).getRoom().getRoomId();
-//        this.sendUpdatedTasks(roomId);
-//    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PatchMapping("/{taskId}")

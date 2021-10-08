@@ -1,13 +1,12 @@
 package com.pw.kanban.domain.room_member;
 
+import com.pw.kanban.domain.assignee.Assignee;
 import com.pw.kanban.domain.daily_productivity.DailyProductivity;
 import com.pw.kanban.domain.room.Room;
-import com.pw.kanban.domain.task.Task;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -46,8 +45,9 @@ public class RoomMember {
     @ToString.Exclude
     private List<DailyProductivity> dailyProductivityList;
 
-    @ManyToMany(mappedBy = "assignees")
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "roomMember")
+    @ToString.Exclude
+    private List<Assignee> assignees;
 
     @Column(name = "daily_productivity")
     private String dailyProductivity;

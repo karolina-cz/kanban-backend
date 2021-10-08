@@ -1,5 +1,6 @@
 package com.pw.kanban.domain.task;
 
+import com.pw.kanban.domain.assignee.Assignee;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.room_member.RoomMember;
 import lombok.*;
@@ -63,12 +64,9 @@ public class Task {
     @Column(name = "work_points2")
     private String workPoints2;
 
-    @ManyToMany
-    @JoinTable(
-            name = "assignee",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_member_id"))
-    private List<RoomMember> assignees;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Assignee> assignees;
 
     public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
                 Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2, Integer dueDay) {

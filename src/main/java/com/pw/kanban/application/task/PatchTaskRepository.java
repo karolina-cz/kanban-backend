@@ -1,7 +1,7 @@
 package com.pw.kanban.application.task;
 
 
-import com.pw.kanban.domain.room_member.Color;
+import com.pw.kanban.application.assignee.PatchTaskAssigneeHandler;
 import com.pw.kanban.domain.task.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,8 +38,8 @@ public class PatchTaskRepository {
         if(taskDto.getWorkPoints2() != null) {
             task.setWorkPoints2(workPointConverter.colorArrayToString(taskDto.getWorkPoints2()));
         }
-        if(taskDto.getAssignees() != null) {
-            patchTaskAssigneeHandler.handle(taskId, taskDto.getAssignees());
+        if(taskDto.getRoomMembers() != null) {
+            this.patchTaskAssigneeHandler.handle(taskId, taskDto.getRoomMembers().get(0));
         }
         taskRepository.save(task);
         return taskRepresentationMapper.mapTaskToRepresentation(task);

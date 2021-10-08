@@ -33,7 +33,7 @@ public class RoomMemberDtoMapper {
         }
         RoomMemberType memberType = color == Color.BLACK ? RoomMemberType.VIEWER : RoomMemberType.PARTICIPANT;
         String productivity = memberProductivityConverter.doubleArrayToString(new Double[DAYS_COUNT]);
-        return new RoomMember(roomMemberDto.getName(), true,  color, room, memberType, productivity);
+        return new RoomMember(roomMemberDto.getName().substring(0, Math.min(roomMemberDto.getName().length(), 30)), true,  color, room, memberType, productivity);
     }
 
 

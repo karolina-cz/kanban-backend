@@ -59,7 +59,7 @@ public class Room {
     @ToString.Exclude
     private List<Day> days;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "room", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<RoomMember> roomMembers;
 

@@ -81,6 +81,8 @@ CREATE TABLE column_limit(
 );
 
 create table assignee (
+                          assignee_id uuid primary key,
                           task_id uuid not null references task,
-                          room_member_id uuid not null references room_member
+                          room_member_id uuid not null references room_member,
+                          assignee_type text
 );

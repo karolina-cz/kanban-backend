@@ -26,7 +26,7 @@ public class TaskInitializer {
         taskTemplates.forEach(taskTemplate -> {
             for (int i = 0; i < taskTemplate.getTasksNumber(); i++) {
                 String taskNamePrefix = taskTemplate.getTasksType() == TaskType.STANDARD ? "S." :
-                        taskTemplate.getTasksType() == TaskType.FIXED_DATE ? "FD." : "U.";
+                        taskTemplate.getTasksType() == TaskType.FIXED_DATE ? "UD." : "P.";
                 String[] workPoints1 = new String[POINTS_PER_STAGE];
                 String workPoints = workPointConverter.stringArrayToString(workPoints1);
                 Task task = new Task(room, false, ColumnName.BACKLOG, null, null, null,

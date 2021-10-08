@@ -21,5 +21,5 @@ public class TaskDto {
     List<Color> workPoints1;
     List<Color> workPoints2;
     Integer dueDay;
-    List<UUID> assignees;
+    List<UUID> roomMembers;
 }

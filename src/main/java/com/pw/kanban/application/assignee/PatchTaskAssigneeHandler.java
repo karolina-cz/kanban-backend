@@ -1,5 +1,8 @@
-package com.pw.kanban.application.task;
+package com.pw.kanban.application.assignee;
 
+import com.pw.kanban.domain.assignee.Assignee;
+import com.pw.kanban.domain.assignee.AssigneeRepository;
+import com.pw.kanban.domain.assignee.AssigneeType;
 import com.pw.kanban.domain.room_member.RoomMember;
 import com.pw.kanban.domain.room_member.RoomMemberRepository;
 import com.pw.kanban.domain.task.Task;
@@ -10,31 +13,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CreateTaskAssigneeHandler {
+public class PatchTaskAssigneeHandler {
     private final TaskRepository taskRepository;
     private final RoomMemberRepository roomMemberRepository;
+    private final AssigneeRepository assigneeRepository;
 
     @Transactional
     public void handle(UUID taskId, UUID roomMemberId) {
         Task task = taskRepository.findById(taskId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND)
+            new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
+        task.getAssignees().forEach(assignee -> this.assigneeRepository.deleteById(assignee.getAssigneeId()));
+        task.getAssignees().clear();
         RoomMember roomMember = roomMemberRepository.findById(roomMemberId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND)
         );
-        if (!containsRoomMemberId(task.getAssignees(), roomMember.getRoomMemberId())) {
-            task.getAssignees().add(roomMember);
-            taskRepository.save(task);
-        }
-    }
-
-    public boolean containsRoomMemberId(final List<RoomMember> list, final UUID roomMemberId){
-        return list.stream().anyMatch(o -> o.getRoomMemberId().equals(roomMemberId));
+        Assignee assignee = new Assignee(roomMember, task, AssigneeType.MAIN);
+        task.getAssignees().add(assignee);
+        taskRepository.save(task);
     }
 }
