@@ -2,6 +2,7 @@ package com.pw.kanban.application.task;
 
 import com.pw.kanban.domain.task.TaskRepresentation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SendTasksHandler {
     private final GetTaskRepository getTaskRepository;
     private final SimpMessagingTemplate msgTemplate;

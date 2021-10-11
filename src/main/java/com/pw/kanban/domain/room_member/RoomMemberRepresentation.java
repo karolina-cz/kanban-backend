@@ -15,4 +15,5 @@ public class RoomMemberRepresentation {
     boolean isActive;
     RoomMemberType type;
     Double[] dailyProductivity;
+    Double[] usedProductivity;
 }

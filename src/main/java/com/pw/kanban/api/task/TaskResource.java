@@ -2,6 +2,7 @@ package com.pw.kanban.api.task;
 
 import com.pw.kanban.application.assignee.CreateAssigneeHandler;
 import com.pw.kanban.application.assignee.DeleteAssigneeHandler;
+import com.pw.kanban.application.room_member.SendRoomMembersHandler;
 import com.pw.kanban.application.task.*;
 import com.pw.kanban.domain.task.TaskDto;
 import com.pw.kanban.domain.task.TaskRepresentation;
@@ -24,6 +25,7 @@ public class TaskResource {
     private final DeleteAssigneeHandler deleteAssigneeHandler;
     private final SimpMessagingTemplate msgTemplate;
     private final CreateAssigneeHandler createAssigneeHandler;
+    private final SendRoomMembersHandler sendRoomMembersHandler;
 
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
@@ -56,6 +58,7 @@ public class TaskResource {
         TaskRepresentation taskRepresentation = patchTaskRepository.patchTask(taskDto, taskId);
         UUID roomId = getTaskRepository.getTaskById(taskId).getRoom().getRoomId();
         this.sendUpdatedTasks(roomId);
+        this.sendRoomMembersHandler.handle(roomId);
         return taskRepresentation;
     }
 

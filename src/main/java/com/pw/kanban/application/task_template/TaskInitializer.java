@@ -1,6 +1,7 @@
 package com.pw.kanban.application.task_template;
 
 import com.pw.kanban.application.task.WorkPointConverter;
+import com.pw.kanban.application.work_point.GenerateWorkPointsHandler;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.task.*;
 import com.pw.kanban.domain.task_template.TaskTemplate;
@@ -19,6 +20,7 @@ public class TaskInitializer {
     private final TaskTemplateRepository taskTemplateRepository;
     private final TaskRepository taskRepository;
     private final WorkPointConverter workPointConverter;
+    private final GenerateWorkPointsHandler generateWorkPointsHandler;
 
     @Transactional
     public void initializeTasks (Room room) {
@@ -31,6 +33,8 @@ public class TaskInitializer {
                 String workPoints = workPointConverter.stringArrayToString(workPoints1);
                 Task task = new Task(room, false, ColumnName.BACKLOG, null, null, null,
                         taskTemplate.getVisibleFromDay(), taskTemplate.getTasksType(), taskNamePrefix + (i + 1), workPoints, workPoints, taskTemplate.getDueDay());
+                this.taskRepository.save(task);
+                task.setWorkPoints(generateWorkPointsHandler.handle(task));
                 this.taskRepository.save(task);
             }
         });

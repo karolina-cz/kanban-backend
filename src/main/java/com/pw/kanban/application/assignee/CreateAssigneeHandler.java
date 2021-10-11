@@ -5,6 +5,7 @@ import com.pw.kanban.domain.room_member.RoomMember;
 import com.pw.kanban.domain.room_member.RoomMemberRepository;
 import com.pw.kanban.domain.task.Task;
 import com.pw.kanban.domain.task.TaskRepository;
+import com.pw.kanban.domain.work_point.WorkPointRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class CreateAssigneeHandler {
     private final RoomMemberRepository roomMemberRepository;
     private final AssigneeRepresentationMapper assigneeRepresentationMapper;
     private final AssigneeRepository assigneeRepository;
+    private final WorkPointRepository workPointRepository;
 
     @Transactional
     public AssigneeRepresentation handle(AssigneeDto assigneeDto) {
@@ -58,7 +60,15 @@ public class CreateAssigneeHandler {
                 .filter(obj -> obj.getAssigneeType() == AssigneeType.MAIN ||
                         obj.getRoomMember().getRoomMemberId() == assigneeDto.getRoomMemberId())
                 .collect(Collectors.toList())
-                .forEach(obj -> this.assigneeRepository.deleteById(obj.getAssigneeId()));
+                .forEach(assignee -> {
+                    assignee.getWorkPoints().forEach(workPoint -> {
+                        workPoint.setAssignee(null);
+                        workPointRepository.save(workPoint);
+                    });
+                    assignee.getWorkPoints().clear();
+                    assigneeRepository.save(assignee);
+                    this.assigneeRepository.deleteById(assignee.getAssigneeId());
+    });
         task.getAssignees().removeIf(obj -> obj.getAssigneeType() == AssigneeType.MAIN ||
                 obj.getRoomMember().getRoomMemberId() == assigneeDto.getRoomMemberId());
     }

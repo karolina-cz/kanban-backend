@@ -3,6 +3,7 @@ package com.pw.kanban.domain.task;
 import com.pw.kanban.domain.assignee.AssigneeRepresentation;
 import com.pw.kanban.domain.room_member.Color;
 import com.pw.kanban.domain.room_member.RoomMemberRepresentation;
+import com.pw.kanban.domain.work_point.WorkPointRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -26,5 +27,6 @@ public class TaskRepresentation {
     String name;
     List<AssigneeRepresentation> assignees;
     Integer dueDay;
+    List<WorkPointRepresentation> workPoints;
 }
 

@@ -3,6 +3,7 @@ package com.pw.kanban.domain.task;
 import com.pw.kanban.domain.assignee.Assignee;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.room_member.RoomMember;
+import com.pw.kanban.domain.work_point.WorkPoint;
 import lombok.*;
 
 import javax.persistence.*;
@@ -67,6 +68,10 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Assignee> assignees;
+
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<WorkPoint> workPoints;
 
     public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
                 Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2, Integer dueDay) {

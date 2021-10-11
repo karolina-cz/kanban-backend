@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoomMemberRepresentationMapper {
     private final MemberProductivityConverter memberProductivityConverter;
+    private final RoomMemberProductivityComputer roomMemberProductivityComputer;
 
     public RoomMemberRepresentation mapRoomMemberToRepresentation(RoomMember roomMember) {
         if(roomMember == null) return null;
         Double[] dailyProductivity = memberProductivityConverter.stringToDoubleArray(roomMember.getDailyProductivity());
+        Double[] usedProductivity = roomMemberProductivityComputer.compute(roomMember);
         return new RoomMemberRepresentation(roomMember.getRoomMemberId(), roomMember.getName(), roomMember.getColor(),
-                roomMember.isActive(), roomMember.getType(), dailyProductivity);
+                roomMember.isActive(), roomMember.getType(), dailyProductivity, usedProductivity);
     }
 
     public List<RoomMemberRepresentation> mapRoomMembersToRepresentation(List<RoomMember> roomMembers) {
