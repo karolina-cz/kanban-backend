@@ -1,5 +1,6 @@
 package com.pw.kanban.domain.simulation;
 
+import com.pw.kanban.domain.room.RoomType;
 import com.pw.kanban.domain.simulation_day.SimulationDay;
 import com.pw.kanban.domain.task_template.TaskTemplate;
 import lombok.AccessLevel;
@@ -21,6 +22,10 @@ public class Simulation {
     @GeneratedValue
     @Column(name = "simulation_id")
     private UUID simulationId;
+
+    @Column(name = "simulation_type")
+    @Enumerated(EnumType.STRING)
+    private RoomType simulationType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "simulation")
     @ToString.Exclude

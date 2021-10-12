@@ -15,9 +15,9 @@ public class SimulationDayResource {
     private final GetSimulationDayHandler simulationDayHandler;
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping
+    @GetMapping("/{simulationType}")
     @ResponseStatus(HttpStatus.OK)
-    List<SimulationDayRepresentation> getAllSimulationDays() {
-        return simulationDayHandler.handle();
+    List<SimulationDayRepresentation> getAllSimulationDays(@PathVariable String simulationType) {
+        return simulationDayHandler.handle(simulationType);
     }
 }

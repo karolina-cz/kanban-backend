@@ -52,7 +52,8 @@ CREATE TABLE task(
 );
 
 CREATE TABLE simulation(
-    simulation_id uuid primary key
+    simulation_id uuid primary key,
+    simulation_type text not null
 );
 
 CREATE TABLE simulation_day (
@@ -85,4 +86,13 @@ create table assignee (
                           task_id uuid not null references task,
                           room_member_id uuid not null references room_member,
                           assignee_type text
+);
+
+CREATE TABLE work_point (
+                            work_point_id uuid primary key,
+                            point_index int not null,
+                            stage int not null,
+                            day_modified int,
+                            assignee_id uuid references assignee,
+                            task_id uuid references task
 );
