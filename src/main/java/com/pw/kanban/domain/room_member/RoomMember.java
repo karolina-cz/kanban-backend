@@ -1,7 +1,6 @@
 package com.pw.kanban.domain.room_member;
 
 import com.pw.kanban.domain.assignee.Assignee;
-import com.pw.kanban.domain.daily_productivity.DailyProductivity;
 import com.pw.kanban.domain.room.Room;
 import lombok.*;
 
@@ -24,9 +23,6 @@ public class RoomMember {
     @Column(name="name")
     private String name;
 
-    @Column(name = "is_active")
-    private boolean isActive;
-
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private RoomMemberType type;
@@ -41,10 +37,6 @@ public class RoomMember {
     @JoinColumn(name="room_id")
     private Room room;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "roomMember")
-    @ToString.Exclude
-    private List<DailyProductivity> dailyProductivityList;
-
     @OneToMany(mappedBy = "roomMember")
     @ToString.Exclude
     private List<Assignee> assignees;
@@ -52,9 +44,8 @@ public class RoomMember {
     @Column(name = "daily_productivity")
     private String dailyProductivity;
 
-    public RoomMember(@NonNull String name, boolean isActive, @NonNull Color color, Room room, RoomMemberType type, String dailyProductivity) {
+    public RoomMember(@NonNull String name, @NonNull Color color, Room room, RoomMemberType type, String dailyProductivity) {
         this.name = name;
-        this.isActive = isActive;
         this.color = color;
         this.room = room;
         this.type = type;

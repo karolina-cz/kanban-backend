@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoomDtoMapper {
 
     public Room mapRoomDtoToRoom(RoomDto roomDto) {
-        //TODO create constants class with initial values for room limits
-        return new Room(roomDto.getRoomType(), 4, 4, 4,
-                4, 4, 4, 50);
+        return new Room(roomDto.getRoomType(), 50);
     }
 }

@@ -14,7 +14,6 @@ public class AssigneeRepresentation {
     UUID roomMemberId;
     String name;
     Color color;
-    boolean isActive;
     RoomMemberType type;
     Double[] dailyProductivity;
     AssigneeType assigneeType;

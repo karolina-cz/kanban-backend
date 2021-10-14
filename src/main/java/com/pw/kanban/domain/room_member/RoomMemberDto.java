@@ -9,7 +9,6 @@ public class RoomMemberDto {
     UUID roomMemberId;
     UUID roomId;
     String name;
-    Boolean isActive;
     RoomMemberType type;
     Double[] dailyProductivity;
 }

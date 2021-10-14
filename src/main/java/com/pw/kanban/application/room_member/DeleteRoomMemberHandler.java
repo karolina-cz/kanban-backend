@@ -12,7 +12,6 @@ public class DeleteRoomMemberHandler {
     private final RoomMemberRepository roomMemberRepository;
 
     public void handle(UUID roomMemberId) {
-        // TODO delete all associated work points and daily productivity
         roomMemberRepository.deleteById(roomMemberId);
     }
 }

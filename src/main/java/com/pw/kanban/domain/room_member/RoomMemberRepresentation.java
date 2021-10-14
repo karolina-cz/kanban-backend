@@ -12,7 +12,6 @@ public class RoomMemberRepresentation {
     UUID roomMemberId;
     String name;
     Color color;
-    boolean isActive;
     RoomMemberType type;
     Double[] dailyProductivity;
     Double[] usedProductivity;

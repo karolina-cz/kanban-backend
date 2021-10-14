@@ -18,7 +18,7 @@ public class AssigneeRepresentationMapper {
     public AssigneeRepresentation mapAssigneeToRepresentation(Assignee assignee) {
         Double[] dailyProductivity = memberProductivityConverter.stringToDoubleArray(assignee.getRoomMember().getDailyProductivity());
         return new AssigneeRepresentation(assignee.getAssigneeId(), assignee.getRoomMember().getRoomMemberId(), assignee.getRoomMember().getName(),
-                assignee.getRoomMember().getColor(), assignee.getRoomMember().isActive(), assignee.getRoomMember().getType(), dailyProductivity,
+                assignee.getRoomMember().getColor(), assignee.getRoomMember().getType(), dailyProductivity,
                 assignee.getAssigneeType());
     }
 

@@ -19,8 +19,7 @@ public class RoomMemberRepresentationMapper {
         if(roomMember == null) return null;
         Double[] dailyProductivity = memberProductivityConverter.stringToDoubleArray(roomMember.getDailyProductivity());
         Double[] usedProductivity = roomMemberProductivityComputer.compute(roomMember);
-        return new RoomMemberRepresentation(roomMember.getRoomMemberId(), roomMember.getName(), roomMember.getColor(),
-                roomMember.isActive(), roomMember.getType(), dailyProductivity, usedProductivity);
+        return new RoomMemberRepresentation(roomMember.getRoomMemberId(), roomMember.getName(), roomMember.getColor(), roomMember.getType(), dailyProductivity, usedProductivity);
     }
 
     public List<RoomMemberRepresentation> mapRoomMembersToRepresentation(List<RoomMember> roomMembers) {

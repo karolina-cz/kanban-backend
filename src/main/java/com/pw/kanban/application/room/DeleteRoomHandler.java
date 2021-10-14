@@ -18,10 +18,6 @@ public class DeleteRoomHandler {
 
     @Transactional
     public void handle(UUID roomId) {
-        //TODO add deleting all tasks, room members, days connected to room
-        // when deleting tasks - delete work points
-        // when deleting members - delte work points (if are any)
-        // when deleting day - delete daily productivity
         roomRepository.deleteById(roomId);
     }
 }

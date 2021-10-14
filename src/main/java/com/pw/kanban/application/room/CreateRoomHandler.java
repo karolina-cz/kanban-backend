@@ -1,7 +1,6 @@
 package com.pw.kanban.application.room;
 
 import com.pw.kanban.application.column_limit.ColumnLimitGenerator;
-import com.pw.kanban.application.day.DayGenerator;
 import com.pw.kanban.application.task_template.TaskInitializer;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.room.RoomDto;

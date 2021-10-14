@@ -10,11 +10,5 @@ import java.util.UUID;
 public class RoomRepresentation {
     UUID roomId;
     RoomType type;
-    Integer stageOneLimit;
-    Integer stageOneInProgressLimit;
-    Integer stageOneCommittedLimit;
-    Integer stageOneDoneLimit;
-    Integer stageTwoLimit;
-    Integer doneLimit;
     Integer blockersProbability;
 }

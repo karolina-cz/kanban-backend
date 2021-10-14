@@ -22,12 +22,6 @@ public class PatchRoomHandler {
     public RoomRepresentation handle(RoomDto roomDto, UUID roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (roomDto.getStageOneLimit() != null) room.setStageOneLimit(roomDto.getStageOneLimit());
-        if(roomDto.getStageOneInProgressLimit() != null) room.setStageOneInProgressLimit(roomDto.getStageOneInProgressLimit());
-        if(roomDto.getStageOneCommittedLimit() != null) room.setStageOneCommittedLimit(roomDto.getStageOneCommittedLimit());
-        if(roomDto.getStageOneDoneLimit() != null) room.setStageOneDoneLimit(roomDto.getStageOneDoneLimit());
-        if(roomDto.getStageTwoLimit() != null) room.setStageTwoLimit(roomDto.getStageTwoLimit());
-        if(roomDto.getDoneLimit() != null) room.setDoneLimit(roomDto.getDoneLimit());
         if(roomDto.getBlockersProbability() != null) room.setBlockersProbability(roomDto.getBlockersProbability());
         roomRepository.save(room);
         return roomRepresentationMapper.mapRoomToRepresentation(room);

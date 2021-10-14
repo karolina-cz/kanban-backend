@@ -26,7 +26,6 @@ public class PatchRoomMemberHandler {
     public RoomMemberRepresentation handle(RoomMemberDto roomMemberDto, UUID roomMemberId) {
         RoomMember roomMember = roomMemberRepository.findById(roomMemberId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (roomMemberDto.getIsActive() != null) roomMember.setActive(roomMemberDto.getIsActive());
         if (roomMemberDto.getName() != null) roomMember.setName(roomMemberDto.getName());
         if (roomMemberDto.getDailyProductivity() != null) {
             roomMember.setDailyProductivity(memberProductivityConverter
@@ -39,9 +38,7 @@ public class PatchRoomMemberHandler {
 
     @Transactional
     public void handleMultiple(List<RoomMemberDto> roomMemberDtos) {
-        roomMemberDtos.forEach(roomMemberDto -> {
-            this.handle(roomMemberDto, roomMemberDto.getRoomMemberId());
-        });
+        roomMemberDtos.forEach(roomMemberDto -> this.handle(roomMemberDto, roomMemberDto.getRoomMemberId()));
     }
 
 }
