@@ -1,9 +1,6 @@
 package com.pw.kanban.application.column_limit;
 
-import com.pw.kanban.domain.column_limit.ColumnLimit;
-import com.pw.kanban.domain.column_limit.ColumnLimitDto;
-import com.pw.kanban.domain.column_limit.ColumnLimitRepository;
-import com.pw.kanban.domain.column_limit.ColumnLimitRepresentation;
+import com.pw.kanban.domain.column_limit.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -27,7 +24,7 @@ public class PatchColumnLimitHandler {
         ColumnLimit columnLimit = columnLimitRepository.findById(columnLimitId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (columnLimitDto.getLimitValue() != null) columnLimit.setLimitValue(columnLimitDto.getLimitValue());
-        if (columnLimitDto.getColumns() != null) {
+        if (columnLimitDto.getColumns() != null && columnLimit.getLimitType() == ColumnLimitType.MULTIPLE) {
             columnLimit.setColumns(columnNameConverter.columnNameArrayToString(columnLimitDto.getColumns()));
         }
         if (columnLimitDto.getIsActive() != null) columnLimit.setIsActive(columnLimitDto.getIsActive());

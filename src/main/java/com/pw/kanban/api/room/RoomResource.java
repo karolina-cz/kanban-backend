@@ -24,7 +24,7 @@ public class RoomResource {
     private final SimpMessagingTemplate msgTemplate;
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "http://localhost:4200, https://kanban-simulator.herokuapp.com/")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     UUID createRoom(@RequestBody RoomDto roomDto) {

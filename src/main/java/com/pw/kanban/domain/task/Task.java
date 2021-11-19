@@ -59,12 +59,6 @@ public class Task {
     @Column(name = "effort")
     private Double effort;
 
-    @Column(name = "work_points1")
-    private String workPoints1;
-
-    @Column(name = "work_points2")
-    private String workPoints2;
-
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Assignee> assignees;
@@ -74,7 +68,7 @@ public class Task {
     private List<WorkPoint> workPoints;
 
     public Task(Room room, Boolean isBlocked, ColumnName kanbanColumn, Integer startDay, Integer endDay, Double effort,
-                Integer visibleFromDay, TaskType type, String name, String workPoints1, String workPoints2, Integer dueDay) {
+                Integer visibleFromDay, TaskType type, String name, Integer dueDay) {
         this.room = room;
         this.isBlocked = isBlocked;
         this.kanbanColumn = kanbanColumn;
@@ -84,8 +78,6 @@ public class Task {
         this.visibleFromDay = visibleFromDay;
         this.type = type;
         this.name = name;
-        this.workPoints1 = workPoints1;
-        this.workPoints2 = workPoints2;
         this.dueDay = dueDay;
     }
 }

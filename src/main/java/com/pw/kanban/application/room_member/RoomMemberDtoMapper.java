@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class RoomMemberDtoMapper {
-    public static final Integer DAYS_COUNT = 10;
+    public static final int DAYS_COUNT = 10;
     private final RoomRepository roomRepository;
     private final RoomMemberColorGenerator colorGenerator;
     private final MemberProductivityConverter memberProductivityConverter;
@@ -33,7 +33,8 @@ public class RoomMemberDtoMapper {
         }
         RoomMemberType memberType = color == Color.BLACK ? RoomMemberType.VIEWER : RoomMemberType.PARTICIPANT;
         String productivity = memberProductivityConverter.doubleArrayToString(new Double[DAYS_COUNT]);
-        return new RoomMember(roomMemberDto.getName().substring(0, Math.min(roomMemberDto.getName().length(), 30)),  color, room, memberType, productivity);
+        return new RoomMember(roomMemberDto.getName().substring(0, Math.min(roomMemberDto.getName().length(), 30)),
+                color, room, memberType, productivity, productivity);
     }
 
 

@@ -27,8 +27,6 @@ CREATE TABLE task
     effort           float8,
     name             text,
     type             text    not null,
-    work_points1     text    not null,
-    work_points2     text    not null,
     due_day          int
 );
 

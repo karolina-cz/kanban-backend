@@ -15,8 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TaskRepresentation {
     UUID taskId;
-    List<Color> workPoints1;
-    List<Color> workPoints2;
     Boolean isBlocked;
     TaskType type;
     ColumnName kanbanColumn;

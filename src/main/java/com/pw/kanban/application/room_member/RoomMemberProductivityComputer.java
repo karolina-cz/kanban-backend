@@ -10,9 +10,11 @@ import java.util.Arrays;
 @Service
 @RequiredArgsConstructor
 public class RoomMemberProductivityComputer {
+    private final MemberProductivityConverter memberProductivityConverter;
 
     public Double[] compute(RoomMember roomMember) {
         Double[] usedProductivity = new Double[RoomMemberDtoMapper.DAYS_COUNT];
+        Double[] unblockedTasks = memberProductivityConverter.stringToDoubleArray(roomMember.getUnblockedTasksProductivity());
         Arrays.fill(usedProductivity, 0.0);
         if (roomMember.getAssignees() != null) {
             roomMember.getAssignees().forEach(assignee -> {
@@ -23,6 +25,13 @@ public class RoomMemberProductivityComputer {
                     });
                 }
             });
+        }
+        for (int i = 0; i < RoomMemberDtoMapper.DAYS_COUNT; i++) {
+            if (usedProductivity[i] == null) {
+                usedProductivity[i] = unblockedTasks[i];
+            } else if (unblockedTasks[i] != null) {
+                usedProductivity[i] += unblockedTasks[i];
+            } // todo przetestowac
         }
         return usedProductivity;
     }

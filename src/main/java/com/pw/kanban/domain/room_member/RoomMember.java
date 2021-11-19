@@ -44,11 +44,15 @@ public class RoomMember {
     @Column(name = "daily_productivity")
     private String dailyProductivity;
 
-    public RoomMember(@NonNull String name, @NonNull Color color, Room room, RoomMemberType type, String dailyProductivity) {
+    @Column(name = "unblocked_tasks_productivity")
+    private String unblockedTasksProductivity;
+
+    public RoomMember(@NonNull String name, @NonNull Color color, Room room, RoomMemberType type, String dailyProductivity, String unblockedTasksProductivity) {
         this.name = name;
         this.color = color;
         this.room = room;
         this.type = type;
         this.dailyProductivity = dailyProductivity;
+        this.unblockedTasksProductivity = unblockedTasksProductivity;
     }
 }

@@ -18,8 +18,8 @@ public class TaskDto {
     Integer visibleFromDay;
     Double effort;
     String name;
-    List<Color> workPoints1;
-    List<Color> workPoints2;
     Integer dueDay;
     List<UUID> roomMembers;
+    UUID editorId;
+    Integer dayModified;
 }

@@ -16,9 +16,7 @@ public class GenerateTaskHandler {
     private final TaskRepository taskRepository;
     private final RoomRepository roomRepository;
     private final TaskRepresentationMapper taskRepresentationMapper;
-    private final WorkPointConverter workPointConverter;
     private final GenerateWorkPointsHandler generateWorkPointsHandler;
-    public static final int POINTS_PER_STAGE = 5;
 
     @Transactional
     public TaskRepresentation handle(UUID roomId) {
@@ -26,11 +24,9 @@ public class GenerateTaskHandler {
         long standardTaskNumber = room.getTasks().stream()
                 .filter(task -> task.getType() == TaskType.STANDARD)
                 .count();
-        String[] workPoints1 = new String[POINTS_PER_STAGE];
-        String workPoints = workPointConverter.stringArrayToString(workPoints1);
         Task task = new Task(room, false, ColumnName.BACKLOG, null,
                 null, null, null, TaskType.STANDARD,
-                "S." + (standardTaskNumber + 1), workPoints, workPoints, null);
+                "S." + (standardTaskNumber + 1), null);
         taskRepository.save(task);
         task.setWorkPoints(generateWorkPointsHandler.handle(task));
         taskRepository.save(task);

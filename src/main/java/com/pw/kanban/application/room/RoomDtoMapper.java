@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoomDtoMapper {
 
     public Room mapRoomDtoToRoom(RoomDto roomDto) {
-        return new Room(roomDto.getRoomType(), 50);
+        return new Room(roomDto.getRoomType(), 25);
     }
 }

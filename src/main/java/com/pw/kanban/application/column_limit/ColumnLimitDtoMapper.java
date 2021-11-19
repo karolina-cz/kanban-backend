@@ -2,6 +2,7 @@ package com.pw.kanban.application.column_limit;
 
 import com.pw.kanban.domain.column_limit.ColumnLimit;
 import com.pw.kanban.domain.column_limit.ColumnLimitDto;
+import com.pw.kanban.domain.column_limit.ColumnLimitType;
 import com.pw.kanban.domain.room.Room;
 import com.pw.kanban.domain.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,6 @@ public class ColumnLimitDtoMapper {
         Room room = roomRepository.findById(columnLimitDto.getRoomId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         String columns = columnNameConverter.columnNameArrayToString(columnLimitDto.getColumns());
-        return new ColumnLimit(room, columnLimitDto.getLimitType(), columns, columnLimitDto.getLimitValue(), columnLimitDto.getIsActive());
+        return new ColumnLimit(room, ColumnLimitType.MULTIPLE, columns, columnLimitDto.getLimitValue(), columnLimitDto.getIsActive());
     }
 }

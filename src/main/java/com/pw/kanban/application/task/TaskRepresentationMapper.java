@@ -20,18 +20,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TaskRepresentationMapper {
     private final AssigneeRepresentationMapper assigneeRepresentationMapper;
-    private final WorkPointConverter workPointConverter;
     private final WorkPointRepresentationMapper workPointRepresentationMapper;
 
     @Transactional
     public TaskRepresentation mapTaskToRepresentation(Task task) {
-        List<Color> workPoints1 = workPointConverter.stringToColorArray(task.getWorkPoints1());
-        List<Color> workPoints2 = workPointConverter.stringToColorArray(task.getWorkPoints2());
         List<Assignee> assignees = task.getAssignees();
         List<AssigneeRepresentation> assigneeRepresentations = assigneeRepresentationMapper
                 .mapAssigneesToRepresentation(assignees);
         List<WorkPointRepresentation> workPoints = workPointRepresentationMapper.mapWorkPointsToRepresentation(task.getWorkPoints());
-        return new TaskRepresentation(task.getTaskId(), workPoints1, workPoints2,
+        return new TaskRepresentation(task.getTaskId(),
                 task.isBlocked(), task.getType(), task.getKanbanColumn(),
                 task.getStartDay(), task.getEndDay(), task.getVisibleFromDay(), task.getEffort(), task.getName(),
                 assigneeRepresentations, task.getDueDay(), workPoints);
