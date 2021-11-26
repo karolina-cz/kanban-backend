@@ -21,12 +21,12 @@ DO $$
                                                       'Wymagałoby to zrealizowania 4 standardowych zadań ' ||
                                                       '(wszystkie muszą być ukończone by nowa funkcja działała). ' ||
                                                       'Prosi was o podanie szacowanego czasu zrealizowania tych zadań. ' ||
-                                                      'Szacowany dzień ukończenia tych 4 zadań zapiszcie w polach "koniec".'),
+                                                      'Szacowany dzień ukończenia tych 4 zadań zapiszcie w skrypcie.'),
             (gen_random_uuid (), simSysId, 9, 'Zostały już tylko dwa dni na ukończenie zadań z ustaloną datą.'),
             (gen_random_uuid (), simSysId, 10, 'Gratulacje! Dotrwaliście do ostatniego dnia symulacji. ' ||
                                                        'Dokończcie pracę i wybierzcie się na zasłużony urlop!');
         INSERT INTO task_template (task_template_id, simulation_id, tasks_number, tasks_type, visible_from_day, due_day) VALUES
-            (gen_random_uuid (), simSysId, 4, 'URGENT', 3, null),
+            (gen_random_uuid (), simSysId, 3, 'URGENT', 3, null),
             (gen_random_uuid (), simSysId, 3, 'FIXED_DATE', 4, 10),
             (gen_random_uuid (), simSysId, 6, 'STANDARD', null, null);
 
@@ -50,12 +50,12 @@ DO $$
                                           'Wymagałoby to zrealizowania 4 standardowych zadań ' ||
                                           '(wszystkie muszą być ukończone by nowa funkcja działała). ' ||
                                           'Prosi was o podanie szacowanego czasu zrealizowania tych zadań. ' ||
-                                          'Szacowany dzień ukończenia tych 4 zadań zapiszcie w polach "koniec".'),
+                                          'Szacowany dzień ukończenia tych 4 zadań zapiszcie w skrypcie.'),
         (gen_random_uuid (), simBoardId, 9, 'Zostały już tylko dwa dni na ukończenie zadań z ustaloną datą.'),
         (gen_random_uuid (), simBoardId, 10, 'Gratulacje! Dotrwaliście do ostatniego dnia symulacji. ' ||
                                            'Dokończcie pracę i wybierzcie się na zasłużony urlop!');
         INSERT INTO task_template (task_template_id, simulation_id, tasks_number, tasks_type, visible_from_day, due_day) VALUES
-        (gen_random_uuid (), simBoardId, 4, 'URGENT', 3, null),
+        (gen_random_uuid (), simBoardId, 3, 'URGENT', 3, null),
         (gen_random_uuid (), simBoardId, 3, 'FIXED_DATE', 4, 10),
         (gen_random_uuid (), simBoardId, 6, 'STANDARD', null, null);
 END $$;
