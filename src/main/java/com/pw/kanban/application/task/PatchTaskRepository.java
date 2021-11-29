@@ -3,6 +3,7 @@ package com.pw.kanban.application.task;
 
 import com.pw.kanban.application.assignee.PatchTaskAssigneeHandler;
 import com.pw.kanban.application.room_member.MemberProductivityConverter;
+import com.pw.kanban.application.room_member.RoomMemberProductivityComputer;
 import com.pw.kanban.domain.assignee.Assignee;
 import com.pw.kanban.domain.assignee.AssigneeType;
 import com.pw.kanban.domain.room.RoomType;
@@ -30,6 +31,7 @@ public class PatchTaskRepository {
     private final TaskRepresentationMapper taskRepresentationMapper;
     private final PatchTaskAssigneeHandler patchTaskAssigneeHandler;
     private final MemberProductivityConverter memberProductivityConverter;
+    private final RoomMemberProductivityComputer roomMemberProductivityComputer;
 
     @Transactional
     public TaskRepresentation patchTask(TaskDto taskDto, UUID taskId) {
@@ -74,26 +76,40 @@ public class PatchTaskRepository {
         RoomMember roomMember = this.roomMemberRepository.findById(taskDto.getEditorId()).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         if (roomMember.getType() == RoomMemberType.PARTICIPANT) {
-            Double[] unblockedTasks = memberProductivityConverter.stringToDoubleArray(roomMember.getUnblockedTasksProductivity());
             if (isMainAssignee(task, roomMember.getRoomMemberId())) {
-                unblockedTasks[taskDto.getDayModified() - 1] = unblockedTasks[taskDto.getDayModified() - 1] == null ?
-                        3.0 : unblockedTasks[taskDto.getDayModified() - 1] + 3.0;
+                updateUnblockedTasksProductivity(roomMember, taskDto.getDayModified() - 1, 3.0);
                 task.setBlocked(false);
             } else if (task.getRoom().getType() != RoomType.KANBAN_BOARD) {
-                unblockedTasks[taskDto.getDayModified() - 1] = unblockedTasks[taskDto.getDayModified() - 1] == null ?
-                        2.0 : unblockedTasks[taskDto.getDayModified() - 1] + 2.0;
+                updateUnblockedTasksProductivity(roomMember, taskDto.getDayModified() - 1, 2.0);
                 task.setBlocked(false);
             }
-            roomMember.setUnblockedTasksProductivity(memberProductivityConverter.doubleArrayToString(unblockedTasks));
-            roomMemberRepository.save(roomMember);
         }
     }
 
     private boolean isMainAssignee(Task task,UUID roomMemberId ) {
-
         List<Assignee> mainAssignee = task.getAssignees().stream()
                 .filter(obj -> obj.getAssigneeType() == AssigneeType.MAIN)
                 .collect(Collectors.toList());
         return mainAssignee.size() > 0 && mainAssignee.get(0).getRoomMember().getRoomMemberId() == roomMemberId;
+    }
+
+    private void updateUnblockedTasksProductivity(RoomMember roomMember, Integer day, Double usedProductivityToAdd) {
+        Double[] unblockedTasks = memberProductivityConverter.stringToDoubleArray(roomMember.getUnblockedTasksProductivity());
+        if (hasEnoughProductivity(roomMember, day, usedProductivityToAdd)) {
+            unblockedTasks[day] = unblockedTasks[day] == null ? usedProductivityToAdd : unblockedTasks[day] + usedProductivityToAdd;
+            roomMember.setUnblockedTasksProductivity(memberProductivityConverter.doubleArrayToString(unblockedTasks));
+            roomMemberRepository.save(roomMember);
+        } else {
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED);
+        }
+    }
+
+    private boolean hasEnoughProductivity(RoomMember roomMember, Integer day, Double usedProductivityToAdd) {
+        Double[] dailyProductivity = memberProductivityConverter.stringToDoubleArray(roomMember.getDailyProductivity());
+        return dailyProductivity[day] != null && getRoomMemberProductivityForDay(roomMember, day) + usedProductivityToAdd <= dailyProductivity[day];
+    }
+
+    private Double getRoomMemberProductivityForDay(RoomMember roomMember, int day) {
+        return this.roomMemberProductivityComputer.compute(roomMember)[day];
     }
 }

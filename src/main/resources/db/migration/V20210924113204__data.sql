@@ -8,7 +8,7 @@ DO $$
                                                       ' Zostały dla was zdefiniowane zadania standardowe. Zacznijcie nad nimi pracować.'),
             (gen_random_uuid (), simSysId, 2, 'Dobra robota! Pracujcie dalej.'),
             (gen_random_uuid (), simSysId, 3, 'System płatności uległ awarii. Z każdą godziną firma traci duże pieniądze.' ||
-                                                      ' Zdefiniowane zostały 4 zadania pilne (Urgent). Natychmiast zacznijcie nad nimi pracować.' ||
+                                                      ' Zdefiniowane zostały 3 zadania pilne (Urgent). Natychmiast zacznijcie nad nimi pracować.' ||
                                                       ' Ich ukończenie ma najwyższy priorytet.'),
             (gen_random_uuid (), simSysId, 4, 'Specjaliści od marketingu wymyślili promocję z okazji „Dnia Słonecznika”.' ||
                                                       'Stworzone zostały dla was 3 zadania z ustaloną datą (Fixed Date). ' ||
@@ -37,7 +37,7 @@ DO $$
                                           ' Zostały dla was zdefiniowane zadania standardowe. Zacznijcie nad nimi pracować.'),
         (gen_random_uuid (), simBoardId, 2, 'Dobra robota! Pracujcie dalej.'),
         (gen_random_uuid (), simBoardId, 3, 'System płatności uległ awarii. Z każdą godziną firma traci duże pieniądze.' ||
-                                          ' Zdefiniowane zostały 4 zadania pilne (Urgent). Natychmiast zacznijcie nad nimi pracować.' ||
+                                          ' Zdefiniowane zostały 3 zadania pilne (Urgent). Natychmiast zacznijcie nad nimi pracować.' ||
                                           ' Ich ukończenie ma najwyższy priorytet.'),
         (gen_random_uuid (), simBoardId, 4, 'Specjaliści od marketingu wymyślili promocję z okazji „Dnia Słonecznika”.' ||
                                           'Stworzone zostały dla was 3 zadania z ustaloną datą (Fixed Date). ' ||

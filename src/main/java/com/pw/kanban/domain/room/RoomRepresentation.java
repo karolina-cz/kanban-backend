@@ -11,4 +11,5 @@ public class RoomRepresentation {
     UUID roomId;
     RoomType type;
     Integer blockersProbability;
+    Integer currentDay;
 }

@@ -23,6 +23,7 @@ public class PatchRoomHandler {
         Room room = roomRepository.findById(roomId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND));
         if(roomDto.getBlockersProbability() != null) room.setBlockersProbability(roomDto.getBlockersProbability());
+        if(roomDto.getCurrentDay() != null) room.setCurrentDay(roomDto.getCurrentDay());
         roomRepository.save(room);
         return roomRepresentationMapper.mapRoomToRepresentation(room);
     }

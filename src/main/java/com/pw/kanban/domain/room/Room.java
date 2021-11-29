@@ -24,6 +24,10 @@ public class Room {
     @Enumerated(EnumType.STRING)
     private RoomType type;
 
+    @NonNull
+    @Column(name = "current_day")
+    private Integer currentDay;
+
     @Column(name = "blockers_probability")
     private Integer blockersProbability;
 
@@ -40,8 +44,9 @@ public class Room {
     private List<ColumnLimit> columnLimits;
 
 
-    public Room(@NonNull RoomType type, Integer blockersProbability) {
+    public Room(@NonNull RoomType type, Integer blockersProbability, @NonNull Integer currentDay) {
         this.type = type;
         this.blockersProbability = blockersProbability;
+        this.currentDay = currentDay;
     }
 }

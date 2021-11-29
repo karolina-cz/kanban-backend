@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public class RoomRepresentationMapper {
 
     public RoomRepresentation mapRoomToRepresentation(Room room) {
-        return new RoomRepresentation(room.getRoomId(), room.getType(), room.getBlockersProbability());
+        return new RoomRepresentation(room.getRoomId(), room.getType(), room.getBlockersProbability(), room.getCurrentDay());
     }
 }

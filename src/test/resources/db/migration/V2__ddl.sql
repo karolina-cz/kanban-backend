@@ -2,8 +2,8 @@ CREATE TABLE room
 (
     room_id              uuid primary key,
     type                 text not null,
-    blockers_probability int,
-    current_day int not null
+    current_day          int not null,
+    blockers_probability int
 );
 
 CREATE TABLE room_member
@@ -13,8 +13,8 @@ CREATE TABLE room_member
     color              text not null,
     type               text,
     room_id            uuid references room,
-    daily_productivity text not null,
-    unblocked_tasks_productivity text
+    unblocked_tasks_productivity text,
+    daily_productivity text not null
 );
 
 CREATE TABLE task
